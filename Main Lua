@@ -97,6 +97,8 @@ local TpSection = MainTab:Section({ Title = "TELEPORT", Box = true, Opened = fal
 
 local FarmSection = MainTab:Section({ Title = "FARM", Box = true, Opened = false })
 
+local BloxSection = MainTab:Section({ Title = "COLLECT BLOCK", Box = true, Opened = false })
+
 local TP_BASE = Vector3.new(-543.4,1330.2,-330.8)
 
 local TP_LOCATIONS = {
@@ -357,3 +359,52 @@ end
 task.wait(2)
 end end) end end})
 
+local running = false
+
+local folder = workspace.World.Lobby.LuckyBlocks
+
+-- =========================
+-- COLLECT FUNCTION
+-- =========================
+
+local function collectAllLuckyBlocks()
+
+    for _, block in pairs(folder:GetChildren()) do
+        
+        local cd = block:FindFirstChildOfClass("ClickDetector")
+        
+        if cd then
+            pcall(function()
+                fireclickdetector(cd)
+            end)
+            task.wait(0.1)
+        end
+
+    end
+end
+
+-- =========================
+-- LOOP
+-- =========================
+
+local function loop()
+    while running do
+        pcall(collectAllLuckyBlocks)
+        task.wait(0.6)
+    end
+end
+
+-- =========================
+-- TOGGLE UI
+-- =========================
+
+BloxSection:Toggle({
+    Title = "Collect Block",
+    Value = false,
+    Callback = function(state)
+        running = state
+        if state then
+            task.spawn(loop)
+        end
+    end
+})
