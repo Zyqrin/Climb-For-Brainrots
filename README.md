@@ -1,0 +1,2 @@
+# Climb-For-Brainrots
+AUTO TP ZONE || AUTO FARM || AUTO BUY SPEED || AUTO BUY CARYY 
